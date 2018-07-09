@@ -1,0 +1,26 @@
+HKCR
+{
+	ext_t2sdk.HsT2Com.1 = s 'HsT2Com Class'
+	{
+		CLSID = s '{60F08CA9-F0E0-4A05-81C9-C92799C8B711}'
+	}
+	ext_t2sdk.HsT2Com = s 'HsT2Com Class'
+	{		
+		CurVer = s 'ext_t2sdk.HsT2Com.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {60F08CA9-F0E0-4A05-81C9-C92799C8B711} = s 'HsT2Com Class'
+		{
+			ProgID = s 'ext_t2sdk.HsT2Com.1'
+			VersionIndependentProgID = s 'ext_t2sdk.HsT2Com'
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{8BDB30E5-2C71-4CEA-A9BF-8C7B24131D8A}'
+			Version = s '1.0'
+		}
+	}
+}

@@ -1,0 +1,75 @@
+// ext_t2sdk.idl : ext_t2sdk 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(ext_t2sdk.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(a817e7a2-43fa-11d0-9e44-00aa00b6770a),
+	dual,	
+	pointer_default(unique)
+]
+interface IComponentRegistrar : IDispatch
+{
+	[id(1)]	HRESULT Attach([in] BSTR bstrPath);
+	[id(2)]	HRESULT RegisterAll();
+	[id(3)]	HRESULT UnregisterAll();
+	[id(4)]	HRESULT GetComponents([out] SAFEARRAY(BSTR)* pbstrCLSIDs, [out] SAFEARRAY(BSTR)* pbstrDescriptions);
+	[id(5)]	HRESULT RegisterComponent([in] BSTR bstrCLSID);
+	[id(6)] HRESULT UnregisterComponent([in] BSTR bstrCLSID);
+};
+
+[
+	object,
+	uuid(165B9942-98BD-4CAF-ABBF-72735B4B1794),
+	dual,
+	nonextensible,
+	pointer_default(unique)
+]
+interface IHsT2Com : IDispatch{
+	[id(1)] HRESULT SetConnString([in] BSTR szSection, [in] BSTR szEntry, [in] BSTR szValue);
+	[id(2)] HRESULT SetServerConfig([in] BSTR servers,[in] BSTR licensefile,[in] BSTR lang,[in] BSTR send_queue_size,[in] BSTR safe_level);
+	[id(3)] HRESULT ConnectionCreate([out] LONG* result);
+	[id(4)] HRESULT Connect([in] LONG timeout, [out] BSTR* ErrorMsg);
+	[id(6)] HRESULT AddValueInt([in] LONG iValue);
+	[id(7)] HRESULT AddValueStr([in] BSTR szValue);
+	[id(8)] HRESULT AddValueDouble([in] DOUBLE fValue);
+	[id(9)] HRESULT AddValueChar([in] BSTR cValue);
+	[id(11)] HRESULT initNewConfig(void);
+	[id(12)] HRESULT addNewPacker([in] LONG iVer);
+	[id(13)] HRESULT addBeginPack(void);
+	[id(14)] HRESULT addEndPack(void);
+	[id(15)] HRESULT runSendBiz([in] LONG iFunID, [in] LONG iSystemNo, [out] LONG* result, [out] BSTR* ErrorMsg, [out] VARIANT* pNameArr, [out] VARIANT* pValueArr);
+	[id(16)] HRESULT runRelease(void);
+	[id(17)] HRESULT AddFieldName([in] BSTR szFieldName,[in] BSTR szFieldType);
+	[id(18)] HRESULT AddFieldDef([in] BSTR szFieldName);
+};
+[
+	uuid(8BDB30E5-2C71-4CEA-A9BF-8C7B24131D8A),
+	version(1.0),
+	custom(a817e7a1-43fa-11d0-9e44-00aa00b6770a,"{4BD326E4-600E-4974-99F3-E7531FDAF8C5}")
+]
+library ext_t2sdkLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(4BD326E4-600E-4974-99F3-E7531FDAF8C5)		
+	]
+	coclass CompReg
+	{
+		[default] interface IComponentRegistrar;
+	};
+	[
+		uuid(60F08CA9-F0E0-4A05-81C9-C92799C8B711)		
+	]
+	coclass HsT2Com
+	{
+		[default] interface IHsT2Com;
+	};
+};
+
+import "shobjidl.idl";
